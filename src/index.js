@@ -48,7 +48,7 @@ const tasksRouter = require("./routes/tasks");
 app.use(express.json());
 
 // Mount routes
-app.use("/tasks", tasksRouter);  // Handles /tasks and /tasks/:id
+app.use("/tasks", tasksRouter);  // Now handles /tasks (all) and /tasks/:id (single)
 
 // Health route
 app.get("/health", (req, res) => {
