@@ -1,34 +1,73 @@
-// src/routes/tasks.js
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-// In-memory tasks array
-const tasks = [
-  { id: 1, title: "Learn Node.js", completed: false, priority: "high", createdAt: new Date() },
-  { id: 2, title: "Build REST API", completed: false, priority: "medium", createdAt: new Date() },
-  { id: 3, title: "Practice Postman", completed: true, priority: "low", createdAt: new Date() },
-  { id: 4, title: "Write documentation", completed: false, priority: "medium", createdAt: new Date() },
-  { id: 5, title: "Push project to GitHub", completed: true, priority: "high", createdAt: new Date() }
-];
-
-// GET /tasks - return all tasks
-// GET /tasks/:id - return task by id or error
-router.get("/:id", (req, res) => {
-  const taskId = parseInt(req.params.id);
-
-  // Check for invalid ID (not a number)
-  if (isNaN(taskId)) {
-    return res.status(400).json({ error: "Invalid ID format" });
-  }
-
-  const task = tasks.find(t => t.id === taskId);
-
-  if (!task) {
-    return res.status(404).json({ error: "Task not found" });
-  }
-
-  res.status(200).json(task);
+// GET /tasks - Retrieve all tasks
+router.get('/', (req, res) => {
+  const tasks = req.app.locals.tasks;
+  res.status(200).json({
+    success: true,
+    data: tasks
+  });
 });
 
+// GET /task/:id - Retrieve task by ID
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  const tasks = req.app.locals.tasks;
+
+  // Check if ID is a valid number
+  if (isNaN(id)) {
+    return res.status(400).json({
+      error: 'Invalid ID format'
+    });
+  }
+
+  const task = tasks.find(t => t.id === parseInt(id));
+  if (!task) {
+    return res.status(404).json({
+      error: 'Task not found'
+    });
+  }
+
+  res.status(200).json({
+    success: true,
+    data: task
+  });
+});
+
+// POST /tasks - Create a new task
+router.post('/', (req, res) => {
+  try {
+    const { title, priority } = req.body;
+
+    if (!title || typeof title !== 'string' || title.trim().length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Title is required and must be a non-empty string'
+      });
+    }
+
+    const newTask = {
+      id: Date.now(),
+      title: title.trim(),
+      completed: false,
+      priority: priority || 'low',
+      createdAt: new Date()
+    };
+
+    const tasks = req.app.locals.tasks;
+    tasks.push(newTask);
+
+    res.status(201).json({
+      success: true,
+      data: newTask
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
+  }
+});
 
 module.exports = router;
