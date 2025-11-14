@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   });
 });
 
-// GET /task/:id - Retrieve task by ID
+// GET /tasks/:id - Retrieve task by ID
 router.get('/:id', (req, res) => {
   const { id } = req.params;
   const tasks = req.app.locals.tasks;
@@ -33,41 +33,6 @@ router.get('/:id', (req, res) => {
     success: true,
     data: task
   });
-});
-
-// POST /tasks - Create a new task
-router.post('/', (req, res) => {
-  try {
-    const { title, priority } = req.body;
-
-    if (!title || typeof title !== 'string' || title.trim().length === 0) {
-      return res.status(400).json({
-        success: false,
-        error: 'Title is required and must be a non-empty string'
-      });
-    }
-
-    const newTask = {
-      id: Date.now(),
-      title: title.trim(),
-      completed: false,
-      priority: priority || 'low',
-      createdAt: new Date()
-    };
-
-    const tasks = req.app.locals.tasks;
-    tasks.push(newTask);
-
-    res.status(201).json({
-      success: true,
-      data: newTask
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      error: 'Internal server error'
-    });
-  }
 });
 
 module.exports = router;
