@@ -1,0 +1,12 @@
+{
+    "id": 2,
+    "title": "Build REST API",
+    "completed": false,
+    "priority": "medium",
+    "createdAt": "2025-10-31T16:00:40.720Z"
+}
+
+
+{
+    "error": "Task not found"
+}
