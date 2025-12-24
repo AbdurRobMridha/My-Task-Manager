@@ -1,33 +1,148 @@
-# Task Management API
 
-A RESTful API for managing tasks, built with Node.js and Express. Supports retrieving all tasks and single tasks by ID, with in-memory storage.
+# My Task Manager
 
-## Setup and Run Instructions
+A simple **Task Manager** backend built with **Node.js**, **Express**, **MySQL**, and **Sequelize ORM**.  
+This project demonstrates the use of Sequelize for database management, replacing raw SQL queries with ORM methods for full CRUD operations.
 
-1. Prerequisites: Node.js (v18+ recommended).
-2. Clone the repository: `git clone <your-repo-url>`
-3. Navigate to the project directory: `cd task-management`
-4. Install dependencies: `npm install`
-5. Start the server: `npm start`
-6. Open http://localhost:3000 in a browser to verify (should display "Task Management API is running!").
+---
 
-**Troubleshooting:** If port 3000 is in use, change `port` in `src/index.js`. Data resets on restart (in-memory).
+## **Table of Contents**
 
-## API Endpoints
+- [Features](#features)  
+- [Prerequisites](#prerequisites)  
+- [Installation](#installation)  
+- [Project Structure](#project-structure)  
+- [Usage](#usage)  
+- [API Endpoints](#api-endpoints)  
+- [Technologies Used](#technologies-used)  
+- [Contributing](#contributing)  
 
-| Method | Endpoint       | Description                              | Response Status/Body Example |
-|--------|----------------|------------------------------------------|------------------------------|
-| GET    | `/`            | Root endpoint (API status)               | 200: "Task Management API is running!" |
-| GET    | `/tasks`       | Retrieve all tasks                       | 200: `{"success":true,"data":[...]} ` (array of 5 sample tasks) |
-| GET    | `/tasks/:id`   | Retrieve a single task by ID             | 200: `{"success":true,"data":{...}}`<br>400: `{"error":"Invalid ID format"}`<br>404: `{"error":"Task not found"}` |
-| GET    | `/health`      | Server health check                      | 200: `{"status":"healthy","uptime":<seconds>}` |
+---
 
-**Testing:** Use Postman or curl. Sample tasks include IDs 1-5 with varying priorities and completion status.
+## **Features**
 
-## Project Structure
+- Define Sequelize models and run migrations.  
+- Full CRUD operations for tasks using ORM methods.  
+- Replace raw SQL queries with cleaner, maintainable code.  
+- Asynchronous database operations using `async/await`.  
+- Organized folder structure for scalability.
 
-- `src/index.js`: Main server file.
-- `src/routes/tasks.js`: Task routes using Express Router.
-- `package.json`: Dependencies and scripts.
+---
 
-For full CRUD, extend with POST/PUT/DELETE.
+## **Prerequisites**
+
+- Node.js (v14 or higher recommended)  
+- npm (Node Package Manager)  
+- MySQL server  
+- Basic understanding of JavaScript promises and async/await  
+
+---
+
+## **Installation**
+
+1. **Clone the repository**  
+
+```bash
+git clone https://github.com/AbdurRobMridha/My-Task-Manager.git
+cd My-Task-Manager
+````
+
+2. **Install dependencies**
+
+```bash
+npm install
+```
+
+3. **Set up environment variables**
+
+Create a `.env` file in the project root:
+
+```env
+DB_USER=root
+DB_PASS=your_password
+DB_NAME=task_manager_db
+DB_HOST=127.0.0.1
+```
+
+4. **Initialize Sequelize and run migrations**
+
+```bash
+npx sequelize-cli db:migrate
+```
+
+---
+
+## **Project Structure**
+
+```
+My-Task-Manager/
+├─ controllers/
+│   └─ taskController.js
+├─ models/
+│   ├─ index.js
+│   └─ task.js
+├─ migrations/
+│   └─ <migration-files>
+├─ routes/
+│   └─ tasks.js
+├─ lab6/                # Updated Lab6 folder
+├─ db.js                # Database connection
+├─ package.json
+└─ README.md
+```
+
+---
+
+## **Usage**
+
+1. Start the server:
+
+```bash
+npm start
+```
+
+2. Test API endpoints using **Postman** or any API client.
+
+---
+
+## **API Endpoints**
+
+| Method | Endpoint   | Description             |
+| ------ | ---------- | ----------------------- |
+| GET    | /tasks     | Get all tasks           |
+| GET    | /tasks/:id | Get a single task by ID |
+| POST   | /tasks     | Create a new task       |
+| PUT    | /tasks/:id | Update a task by ID     |
+| DELETE | /tasks/:id | Delete a task by ID     |
+
+---
+
+## **Technologies Used**
+
+* Node.js
+* Express.js
+* MySQL
+* Sequelize ORM
+* dotenv
+
+---
+
+## **Contributing**
+
+Feel free to fork the repository, create a branch, and submit pull requests.
+Please follow best practices and write meaningful commit messages.
+
+---
+
+## **License**
+
+This project is licensed under the MIT License.
+
+```
+
+---
+
+If you want, I can also make a **more compact, GitHub-ready version** that highlights **Lab6 specifically** for your repo, so anyone can directly see it’s Lab6 content.  
+
+Do you want me to do that?
+```
